@@ -66,7 +66,7 @@ public class CodeServerShutdownSupportingSuperDevListener implements CodeServerL
     this.codeServerPort = chooseCodeServerPort(treeLogger, options);
 
     // This directory must exist when the Code Server starts.
-    ensureModuleBaseDir(options);
+    ensureDirectoriesPresent(options);
 
     codeServerArgs = makeCodeServerArgs(options, codeServerPort);
 
@@ -148,12 +148,20 @@ public class CodeServerShutdownSupportingSuperDevListener implements CodeServerL
     }
   }
 
-  private static void ensureModuleBaseDir(final HostedModeOptions options) {
+  private static void ensureDirectoriesPresent(final HostedModeOptions options) {
     File dir = options.getModuleBaseDir();
     if (!dir.isDirectory()) {
       dir.mkdirs();
       if (!dir.isDirectory()) {
         throw new RuntimeException("unable to create module base directory: " + dir.getAbsolutePath());
+      }
+    }
+    
+    dir = options.getWorkDir();
+    if (!dir.isDirectory()) {
+      dir.mkdirs();
+      if (!dir.isDirectory()) {
+        throw new RuntimeException("unable to create work directory: " + dir.getAbsolutePath());
       }
     }
   }

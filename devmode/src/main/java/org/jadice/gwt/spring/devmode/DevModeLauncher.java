@@ -136,6 +136,8 @@ public class DevModeLauncher extends WebMvcConfigurerAdapter {
 
       // copy configuration properties
       options.setOutput(config.getOutput());
+      options.setGenDir(config.getGenDir());
+      options.setWorkDir(config.getWorkDir());
       
       // FIXME: perform dynamic allocation
       options.setCodeServerPort(9876);
